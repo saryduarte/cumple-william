@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MISIÓN 19: LEVEL UP // PLAYER 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-core: #07090e;
+      --panel-bg: rgba(14, 18, 30, 0.92);
+      --panel-border: rgba(0, 240, 255, 0.35);
+      --neon-cyan: #00f0ff;
+      --neon-purple: #9d4edd;
+      --neon-amber: #ffb703;
+      --neon-green: #00ff88;
+      --text-main: #f1f5f9;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-core);
+      color: var(--text-main);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(157, 78, 221, 0.15), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.15), transparent 40%);
+    }
+
+    .main-wrapper {
+      max-width: 720px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .cyber-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .hud-header {
+      text-align: center;
+      padding: 2.2rem 1.6rem;
+    }
+
+    .status-bar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.2rem;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.75rem;
+      color: var(--neon-cyan);
+      letter-spacing: 2px;
+    }
+
+    .level-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      color: var(--neon-amber);
+      background: rgba(255, 183, 3, 0.12);
+      border: 1px solid var(--neon-amber);
+      padding: 0.35rem 0.9rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 30%, var(--neon-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+    }
+
+    .tactical-audio {
+      margin-top: 1.6rem;
+      background: rgba(7, 10, 18, 0.95);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .track-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .equalizer-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .track-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .track-sub {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    .btn-play-tactical {
+      background: linear-gradient(135deg, var(--neon-cyan), #0077b6);
+      border: none;
+      color: #07090e;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      padding: 0.75rem 1.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+      transition: transform 0.2s;
+    }
+
+    .btn-play-tactical:active {
+      transform: scale(0.95);
+    }
+
+    .system-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .tab-btn {
+      background: rgba(14, 18, 30, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-dim);
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.85rem 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--neon-cyan);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter-body {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: #e2e8f0;
+      white-space: pre-line;
+      border-left: 3px solid var(--neon-amber);
+      padding-left: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .media-box {
+      margin-bottom: 2rem;
+    }
+
+    .media-frame {
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+    }
+
+    .media-frame img {
+      width: 100%;
+      max-height: 450px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .media-frame video {
+      width: 100%;
+      max-height: 450px;
+      display: block;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .media-desc {
+      padding: 0.9rem 0.4rem 0;
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .character-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      padding: 0.5rem 0;
+    }
+
+    .stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    footer {
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- CABECERA -->
+    <header class="cyber-panel hud-header">
+      <div class="status-bar-top">
+        <span>SYS.STATUS: ONLINE</span>
+        <span>LEVEL 19 COMPLETED</span>
+      </div>
+
+      <div class="level-badge">LEVEL 19 // UNLOCKED</div>
+      <h1>¡FELICES 19, BRO! 🎮</h1>
+      <p class="tagline">Celebrando tu último año antes de los 20 con el mejor compañero de aventuras.</p>
+
+      <div class="tactical-audio">
+        <div class="track-meta">
+          <div class="equalizer-icon" id="eqVisual">🎧</div>
+          <div>
+            <div class="track-name">Antes de los 20</div>
+            <div class="track-sub">Banda Sonora // Nivel 19</div>
+          </div>
+        </div>
+        <button class="btn-play-tactical" onclick="toggleMusic()">
+          <span id="btnIcon">▶️</span> <span id="btnText">PLAY</span>
+        </button>
+      </div>
+
+      <audio id="audioTrack" loop preload="auto">
+        <source src="musica.mp3" type="audio/mpeg">
+      </audio>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="system-tabs">
+      <button class="tab-btn active" id="btn-msg" onclick="showTab('tab-msg', 'btn-msg')">📜 CARTA</button>
+      <button class="tab-btn" id="btn-media" onclick="showTab('tab-media', 'btn-media')">📸 RECUERDOS</button>
+      <button class="tab-btn" id="btn-stats" onclick="showTab('tab-stats', 'btn-stats')">⚔️ STATS RPG</button>
+    </nav>
+
+    <!-- PESTAÑA 1: CARTA -->
+    <main id="tab-msg" class="tab-content active cyber-panel">
+      <div class="status-bar-top">
+        <span>ARCHIVO: MENSAJE_DIRECTO.LOG</span>
+        <span style="color: var(--neon-amber);">PRIORIDAD: MÁXIMA</span>
+      </div>
+      <div class="letter-body">
+¡Feliz cumpleaños, mi loquito! 🎂✨ Hoy oficialmente desbloqueas el nivel 19, tu último año antes de los 20, y la verdad es que no podía dejar pasar este día sin sentarme a escribirte algo que realmente estuviera a la altura de lo que significas para mí y de la huella tan bonita que has dejado en mi vida.
+
+Dicen que los amigos de verdad se cuentan con los dedos de una sola mano, y tú estás en el primer lugar indiscutible. En estos últimos tiempos te has convertido en alguien indispensable, en un pilar y en una de las presencias más reconfortantes que tengo. Gracias con el corazón por cada una de tus visitas, por sacar tiempo sin pensarlo dos veces para venir a verme, por quedarte a hacerme compañía y por regalarme tu presencia tan transparente y auténtica. 
+
+Gracias por tener esa paciencia infinita para escucharme cuando tengo la cabeza llena de cosas, por entenderme incluso cuando ni yo misma encuentro las palabras para explicarme y por no juzgarme jamás. Sé bien que a veces me regañas, me dices las cosas de frente y no me pasas una, pero valoro cada uno de esos jalones de oreja con el alma porque sé de sobra de dónde vienen: nacen de una preocupación real, de una amistad sana y de alguien que de verdad quiere verme bien y ver crecer mi mejor versión. Encontrar a alguien que te apoye incondicionalmente, pero que al mismo tiempo tenga la sinceridad y la valentía de decirte la verdad cuando lo necesitas, es una fortuna enorme que no cambiaría por nada.
+
+No cambio por nada en este mundo nuestras horas platicando de anime, las risas interminables, los debates intensos sobre videojuegos, las tonterías espontáneas que solo nosotros dos entendemos o simplemente los momentos de silencio cómodo en los que sabemos que estamos ahí el uno para el otro. En este servidor llamado vida, eres sin duda mi Player 2 favorito, mi compañero de batallas y la persona más leal y de buen corazón que he podido conocer.
+
+Hoy que cumples 19 años quiero desearte lo más grande y bonito del universo. Deseo que cada meta que tienes en mente se concrete, que la vida te premie con salud, estabilidad, paz mental y personas que te valoren exactamente como te mereces. Que nunca pierdas esa chispa, esa nobleza y ese espíritu tan tuyo que ilumina y alegra a quienes tenemos la dicha de tenerte cerca. 
+
+Gracias por existir, gracias por tu cariño tan genuino, por ser ese refugio seguro en mis días complicados y por hacerme sentir tan respaldada. Disfruta tu día al máximo, cómete toda la torta del mundo y recuerda siempre que, pase lo que pase, con regaños, risas o victorias, aquí voy a estar firme para ti en cada nivel que venga.
+
+¡Felices 19 años al mejor amigo de todos! 🎮🔥💙
+      </div>
+    </main>
+
+    <!-- PESTAÑA 2: RECUERDOS (FOTO Y VIDEO) -->
+    <section id="tab-media" class="tab-content cyber-panel">
+      <div class="status-bar-top">
+        <span>GALERÍA TÁCTICA</span>
+        <span>REGISTRO VISUAL</span>
+      </div>
+
+      <!-- FOTO -->
+      <div class="media-box">
+        <div class="media-frame">
+          <img src="foto.jpg" alt="Foto juntos">
+        </div>
+        <p class="media-desc">
+          📸 <strong>Recuerdo desbloqueado:</strong> Esas visitas y momentos que recargan la batería por completo.
+        </p>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="media-box" style="margin-bottom: 0;">
+        <div class="media-frame">
+          <video controls playsinline preload="metadata">
+            <source src="video.mp4" type="video/mp4">
+            Tu navegador no soporta video.
+          </video>
+        </div>
+        <p class="media-desc">
+          🎬 <strong>Momento en video:</strong> De esos instantes que valen oro repetir.
+        </p>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 3: STATS RPG -->
+    <section id="tab-stats" class="tab-content cyber-panel">
+      <div class="status-bar-top">
+        <span>ANÁLISIS DE ATRIBUTOS</span>
+        <span>CLASE: AMIGO LEGENDARIO</span>
+      </div>
+      <div class="character-card">
+        
+        <div class="stat-row">
+          <div class="stat-header">
+            <span>Paciencia & Escucha</span>
+            <span style="color: var(--neon-cyan);">100%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 100%; background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);"></div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-header">
+            <span>Nivel de Regaños Tácticos</span>
+            <span style="color: var(--neon-amber);">LVL 19</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 95%; background: var(--neon-amber); box-shadow: 0 0 10px var(--neon-amber);"></div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-header">
+            <span>Gusto por Anime & Gaming</span>
+            <span style="color: var(--neon-purple);">S-RANK</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 100%; background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple);"></div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-header">
+            <span>Apoyo Incondicional</span>
+            <span style="color: var(--neon-green);">MAX</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 100%; background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green);"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      MISSION COMPLETED // CREATED WITH PRIDE FOR THE BEST PLAYER 2 🎮✨
+    </footer>
+
+  </div>
+
+  <script>
+    function showTab(tabId, btnId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      document.getElementById(btnId).classList.add('active');
+    }
+
+    const audioTrack = document.getElementById('audioTrack');
+    const btnIcon = document.getElementById('btnIcon');
+    const btnText = document.getElementById('btnText');
+    const eqVisual = document.getElementById('eqVisual');
+
+    function toggleMusic() {
+      if (!audioTrack) return;
+
+      if (audioTrack.paused) {
+        audioTrack.play().then(() => {
+          btnIcon.innerText = "⏸️";
+          btnText.innerText = "PAUSE";
+          eqVisual.innerText = "⚡";
+        }).catch(err => {
+          console.error("Error al reproducir audio:", err);
+        });
+      } else {
+        audioTrack.pause();
+        btnIcon.innerText = "▶️";
+        btnText.innerText = "PLAY";
+        eqVisual.innerText = "🎧";
+      }
+    }
+  </script>
+
+</body>
+</html>
